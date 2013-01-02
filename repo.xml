@@ -4,7 +4,7 @@
   <repo quality="experimental" status="unofficial">
     <name>aten</name>
     <description>Aten's gentoo overlay</description>
-    <homepage>http://gentoo-zh.googlecode.com/</homepage>
+    <homepage>https://gitcafe.com/zhtengw/overlay</homepage>
     <owner type="project">
       <email>atenzd@gmail.com</email>
       <name>aten</name>

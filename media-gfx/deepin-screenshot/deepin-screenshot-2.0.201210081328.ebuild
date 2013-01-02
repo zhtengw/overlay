@@ -4,16 +4,17 @@
 
 EAPI="4"
 
-inherit eutils versionator
+inherit fdo-mime eutils versionator
 
-SRC_URI="http://packages.linuxdeepin.com/deepin/pool/main/d/${PN}/${PN}_$(get_version_component_range 1-2)+git$(get_version_component_range 3).orig.tar.gz"
+MY_VER=$(get_version_component_range 1-2)+git$(get_version_component_range 3)
+SRC_URI="http://packages.linuxdeepin.com/deepin/pool/main/d/${PN}/${PN}_${MY_VER}.orig.tar.gz"
 
 DESCRIPTION="Snapshot tools for linux deepin."
 HOMEPAGE="https://github.com/linuxdeepin/deepin-screenshot"
 
 LICENSE="LGPL-3"
 SLOT="1"
-KEYWORDS="~amd64 ~ppc ~ppc64 ~x86 ~x86-fbsd"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 RDEPEND=">=x11-libs/deepin-ui-1.201209291421
@@ -41,19 +42,14 @@ src_install() {
 
 	dosym /usr/share/${PN}/src/${PN} /usr/bin/${PN}
 
-	dodir /usr/share/applications
-	cat > ${ED}/usr/share/applications/${PN}.desktop <<EOF
-[Desktop Entry]
-Hidden=false
-Exec=${PN}
-Name=${PN}
-Name[zh_CN]=深度截屏工具
-Type=Application
-NoDisplay=false
-StartupNotify=false
-Icon=/usr/share/${PN}/theme/logo/${PN}.png
-Terminal=false
-Categories=GTK;GNOME;Utility;
-EOF
+	insinto "/usr/share/applications"
+	doins ${FILEiSDIR}/${PN}.desktop
 }
 
+pkg_postinst() {
+	fdo-mime_desktop_database_update
+}
+
+pkg_postrm() {
+	fdo-mime_desktop_database_update
+}
