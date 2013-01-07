@@ -14,11 +14,12 @@ HOMEPAGE="https://github.com/linuxdeepin/deepin-media-player"
 
 LICENSE="LGPL-3"
 SLOT="0"
-KEYWORDS="~amd64 ~ppc ~ppc64 ~x86 ~x86-fbsd"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 RDEPEND=">=x11-libs/deepin-ui-1.201209101328
 	sci-libs/scipy
+	dev-python/chardet
 	dev-python/formencode
 	media-video/mplayer2"
 DEPEND="${RDEPEND}"
@@ -26,6 +27,9 @@ S=${WORKDIR}/${PN}-${MY_VER}
 src_prepare() {
 	rm -rf debian || die
 	rm locale/*.po* 
+
+	# add patch for mplayer binary name problem
+	epatch ${FILESDIR}/deepin-media-player-backend.patch
 }
 
 src_install() {
@@ -41,6 +45,7 @@ src_install() {
 	dosym /usr/share/${PN}/src/main.py /usr/bin/${PN}
 
 	doicon -s 128 ${FILESDIR}/${PN}.png
+	dosym /usr/share/icons/hicolor/128x128/apps/${PN}.png /usr/share/pixmaps/${PN}.png
 
 	insinto "/usr/share/applications"
 	doins ${FILESDIR}/${PN}.desktop

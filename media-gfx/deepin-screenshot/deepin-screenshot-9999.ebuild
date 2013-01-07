@@ -6,44 +6,37 @@ EAPI="4"
 
 inherit git-2 fdo-mime eutils versionator
 
-EGIT_REPO_URI="git://github.com/linuxdeepin/deepin-screenshot.git"
+EGIT_REPO_URI="git://github.com/lovesnow/deepin-screenshot.git"
 
 DESCRIPTION="Snapshot tools for linux deepin."
-HOMEPAGE="https://github.com/linuxdeepin/deepin-screenshot"
+HOMEPAGE="https://github.com/lovesnow/deepin-screenshot"
 
 LICENSE="LGPL-3"
-SLOT="1"
+SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-RDEPEND="x11-libs/deepin-ui
-	dev-python/pywebkitgtk
-	dev-python/libwnck-python
-	dev-python/pyxdg
-	dev-python/pycurl
-	dev-python/python-xlib"
-DEPEND="dev-python/epydoc"
+
+RDEPEND="dev-lang/python:2.7
+		dev-python/pygtk:2
+		dev-python/python-xlib"
+DEPEND="${RDEPEND}"
 
 src_prepare() {
-	chmod u+x tools/*.py || die
-	cd tools
-	./generate_mo.py || die "failed to update Translate"
-	cd ..
+	sh updateTranslate.sh || die "failed to update Translate"
+	rm -rf po || die
 	rm -rf debian || die
-	rm locale/*.po* 
 }
 
 src_install() {
 	dodoc AUTHORS ChangeLog README
 
-	insinto "/usr/share/"
-	doins -r ${S}/locale
-
-	insinto "/usr/share/${PN}"
-	doins -r  ${S}/src ${S}/theme ${S}/skin
-	fperms 0755 -R /usr/share/${PN}/src/
+	insinto "/usr/share/deepin-screenshot"
+	doins -r ${S}/locale ${S}/src ${S}/theme
+	fperms 0755 -R /usr/share/deepin-screenshot/src/
 
 	dosym /usr/share/${PN}/src/${PN} /usr/bin/${PN}
+
 
 	insinto "/usr/share/applications"
 	doins ${FILESDIR}/${PN}.desktop
