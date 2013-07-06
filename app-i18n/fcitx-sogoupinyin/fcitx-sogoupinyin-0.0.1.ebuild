@@ -4,38 +4,53 @@
 
 EAPI=4
 
-inherit unpacker
-
 DESCRIPTION="Fcitx Wrapper for sogoupinyin."
 HOMEPAGE="http://code.google.com/p/fcitx"
-SRC_URI="http://packages.linuxdeepin.com/deepin/pool/main/f/${PN}-release/${PN}-release_${PV}.orig.tar.gz"
+SRC_URI="http://packages.linuxdeepin.com/deepin/pool/non-free/f/fcitx-sogoupinyin-release/${PN}-release_${PV}.orig.tar.gz"
 
-LICENSE="GPL-2"
+LICENSE="Fcitx-Sogou"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
 RDEPEND=">=app-i18n/fcitx-4.2.6"
-DEPEND="${RDEPEND}
-	dev-util/intltool"
-	
-S=${WORKDIR}/${PN}-release-${PV}/arch
+DEPEND="${RDEPEND}"
+S=${WORKDIR}/${PN}-release-${PV}
+
+src_configure(){
+	#unpack "
+	#	x86? ( arch/data.i386.tar.xz )
+	#	amd64? ( arch/data.amd64.tar.xz )"
+	echo "Current Directory"
+	pwd
+	if use x86; then
+		unpack ./arch/data.i386.tar.xz
+	elif use amd64; then
+		unpack ./arch/data.amd64.tar.xz
+	fi
+}
 
 src_install(){
-	if use x86 ;then 
-		ARCHIVE="${S}/data.i386.tar.xz"
-		LIBDIR="/usr/lib/i386-linux-gnu"
-	elif use amd64 ;then 
-		ARCHIVE="${S}/data.amd64.tar.xz"
-		LIBDIR="/usr/lib/x86_64-linux-gnu"
-	fi
-	unpacker ${ARCHIVE}
-	
+	dodir /usr/lib/fcitx
 	insinto /usr/lib/fcitx
-	doins ${S}/${LIBDIR}/fcitx/${PN}.so
-	fperms 0755 /usr/lib/fcitx/${PN}.so
-	
+	insopts -m0755
+	doins ${S}/usr/lib/*-linux-gnu/fcitx/*
+
 	insinto /usr/share
-	doins -r ${S}/usr/share/icons ${S}/usr/share/fcitx ${S}/usr/share/locale
+	doins -r ${S}/usr/share/fcitx
+	doins -r ${S}/usr/share/icons
+	doins -r ${S}/usr/share/locale
+}
+
+pkg_postinst(){
+	einfo
+	einfo "After install the fcitx-sogoupinyin, a restart of fcitx is"
+	einfo "expected."
+	einfo
+	einfo "If you could not find Sogoupinyin in the Fcitx Input Method"
+	einfo "choice box, you may need to remove your configure file of"
+	einfo "fcitx-cloudpinyin, which locate in ~/.config/fcitx/addon and"
+	einfo "~/.config/fcitx/conf."
+	einfo
 }
