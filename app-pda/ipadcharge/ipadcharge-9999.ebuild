@@ -15,7 +15,7 @@ SLOT="0"
 KEYWORDS="~x86 ~amd64"
 IUSE=""
 
-DEPEND="dev-libs/libusb:1"
+DEPEND=">=dev-libs/libusb-1.0.19"
 RDEPEND="${DEPEND}"
 
 S=${WORKDIR}/ipad_charge
