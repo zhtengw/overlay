@@ -28,7 +28,6 @@ REQUIRED_USE="^^ ( qt4 qt5 )"
 		
 DEPEND="dev-libs/boost
 	      app-text/hunspell
-	      media-libs/opencv:0/2.4
 	      
 	      qt4? (
 		      app-text/poppler[qt4]
@@ -36,6 +35,7 @@ DEPEND="dev-libs/boost
 		      dev-qt/qtcore:4
 		      dev-qt/qtgui:4
 		      dev-qt/qtsql:4
+ 		      media-libs/opencv:0/2.4[qt4]
 	      )
 	      qt5? (
 		      app-text/poppler[qt5]
@@ -43,6 +43,7 @@ DEPEND="dev-libs/boost
 		      dev-qt/qtcore:5
 		      dev-qt/qtgui:5
 		      dev-qt/qtsql:5
+		      media-libs/opencv:0/2.4[qt5]
 	      )
 	      "
 RDEPEND="${DEPEND}
