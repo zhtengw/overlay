@@ -36,19 +36,16 @@ DEPEND="app-text/poppler[qt4]
 	      "
 RDEPEND="${DEPEND}
 		app-text/htmltidy"
-
-
-echo "${MY_PV}"
 		
 src_prepare() {
-	cp "${FILESDIR}"/${PN}_zh_CN.ts ${S}/translations
-	lrelease NixNote2.pro
-	eqmake4 NixNote2.pro
 	# fix VideoCapture undefined reference error with opencv-3
 	if use opencv3; then
 		sed -i 's/LIBS += /LIBS +=  -lopencv_videoio/g' NixNote2.pro
 		sed -i '/\#include "opencv\/cv.h"/i\#include "opencv2\/videoio.hpp"' dialog/webcamcapturedialog.h
 	fi
+	cp "${FILESDIR}"/${PN}_zh_CN.ts ${S}/translations
+	lrelease NixNote2.pro
+	eqmake4 NixNote2.pro
 }
 
 src_install() {
