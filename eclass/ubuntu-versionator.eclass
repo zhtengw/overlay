@@ -117,20 +117,20 @@ ubuntu-versionator_pkg_setup() {
         # unity-base/unity-build-env creates symlinks to /etc/portage/package.*
         #   This allows masking category/package::gentoo and overriding IUSE in /etc/portage/make.conf, which cannot be done in profiles/
         #   Using profiles/ also sets a sane base set of USE flags by all profiles inheriting the Gentoo 'desktop' profile
-
-        if [ -z "${UNITY_BUILD_OK}" ]; then     # Creates a oneshot so it only checks on the 1st package in the emerge list
-                CURRENT_PROFILE=$(eselect --brief profile show)
-
-                if [ -z "$(echo ${CURRENT_PROFILE} | grep unity-gentoo)" ]; then
-                        die "Invalid profile detected, please select a 'unity-gentoo' profile for your architecture shown in 'eselect profile list'"
-                else
-                        PROFILE_RELEASE=$(echo "${CURRENT_PROFILE}" | sed -n 's/.*:\(.*\)\/.*/\1/p')
-                fi
-
-                has_version unity-base/unity-build-env:0/${PROFILE_RELEASE} || \
-			die "'${PROFILE_RELEASE}' profile detected, please run 'emerge unity-base/unity-build-env:0/${PROFILE_RELEASE}' to setup package masking"
-                export UNITY_BUILD_OK=1
-        fi
+# 
+#         if [ -z "${UNITY_BUILD_OK}" ]; then     # Creates a oneshot so it only checks on the 1st package in the emerge list
+#                 CURRENT_PROFILE=$(eselect --brief profile show)
+# 
+#                 if [ -z "$(echo ${CURRENT_PROFILE} | grep unity-gentoo)" ]; then
+#                         die "Invalid profile detected, please select a 'unity-gentoo' profile for your architecture shown in 'eselect profile list'"
+#                 else
+#                         PROFILE_RELEASE=$(echo "${CURRENT_PROFILE}" | sed -n 's/.*:\(.*\)\/.*/\1/p')
+#                 fi
+# 
+#                 has_version unity-base/unity-build-env:0/${PROFILE_RELEASE} || \
+# 			die "'${PROFILE_RELEASE}' profile detected, please run 'emerge unity-base/unity-build-env:0/${PROFILE_RELEASE}' to setup package masking"
+#                 export UNITY_BUILD_OK=1
+#         fi
 
 	# Minimum system-wide GCC version required #
 	[[ "${PROFILE_RELEASE}" == utopic ]] && GCC_MINIMUM="4.8"

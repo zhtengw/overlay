@@ -22,7 +22,7 @@ HOMEPAGE="http://sourceforge.net/projects/nevernote/"
 
 LICENSE="GPL-2"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="+opencv3"
 
 DEPEND="app-text/poppler[qt4]
 	      dev-qt/qtwebkit:4
@@ -31,7 +31,8 @@ DEPEND="app-text/poppler[qt4]
 	      dev-qt/qtsql:4
 	      dev-libs/boost
 	      app-text/hunspell
-	      media-libs/opencv:0/2.4
+	      opencv3? ( media-libs/opencv:0/3.0[qt4] )
+	      !opencv3? ( media-libs/opencv:0/2.4[qt4] )
 	      "
 RDEPEND="${DEPEND}
 		app-text/htmltidy"
@@ -43,6 +44,11 @@ src_prepare() {
 	cp "${FILESDIR}"/${PN}_zh_CN.ts ${S}/translations
 	lrelease NixNote2.pro
 	eqmake4 NixNote2.pro
+	# fix VideoCapture undefined reference error with opencv-3
+	if use opencv3; then
+		sed -i 's/LIBS += /LIBS +=  -lopencv_videoio/g' NixNote2.pro
+		sed -i '/\#include "opencv\/cv.h"/i\#include "opencv2\/videoio.hpp"' dialog/webcamcapturedialog.h
+	fi
 }
 
 src_install() {
