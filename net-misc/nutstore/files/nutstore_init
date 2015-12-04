@@ -1,0 +1,46 @@
+#!/bin/bash
+
+DIST_PACKAGE=/tmp/nutstore_linux_dist.tar.gz
+MENU_DIR=$HOME/.local/share/applications
+ICON_DIR=$HOME/.local/share/icons/hicolor/64x64/apps
+AUTOSTART_DIR=$HOME/.config/autostart
+INSTALL_DIR=$HOME/.nutstore/dist
+
+echo "********************************************"
+echo " Fetching distribution package"
+echo ""
+
+wget --user-agent=NutstoreLinuxDownloader -O $DIST_PACKAGE http://jianguoyun.com/static/exe/installer/nutstore_linux_dist_`uname -m | sed -e 's/i.86/x86/' | sed -e 's/x86_64/x64/'`.tar.gz || exit -1
+
+if [ -a ${INSTALL_DIR} ]; then rm -rf ${INSTALL_DIR} ; fi
+echo " Extracting package to ${INSTALL_DIR}..."
+mkdir -p ${INSTALL_DIR} && tar xzf $DIST_PACKAGE -C ${INSTALL_DIR} || exit -1
+echo " Installing icons and desktop entries..."
+mkdir -p $MENU_DIR && cp ${INSTALL_DIR}/gnome-config/menu/nutstore-menu.desktop $MENU_DIR || exit -1
+mkdir -p $ICON_DIR && cp ${INSTALL_DIR}/app-icon/nutstore.png $ICON_DIR || exit -1
+mkdir -p $AUTOSTART_DIR && cp ${INSTALL_DIR}/gnome-config/autostart/nutstore-daemon.desktop $AUTOSTART_DIR || exit -1
+sed -i "s|env\ python|env\ python2|g" ${INSTALL_DIR}/bin/nutstore-pydaemon.py || exit -1
+
+# we need to update icon cache
+gtk-update-icon-cache --ignore-theme-index $ICON_DIR/../.. > /dev/null 2>&1
+
+echo ""
+echo "********************************************"
+echo "Installation is completed succesfully. "
+
+echo ""
+
+echo "Do you wish to start Nutstore now? "
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) 
+        nohup ${INSTALL_DIR}/bin/nutstore-pydaemon.py >/dev/null 2>&1 & 
+        break;;
+        No ) 
+        break;;
+    esac
+done
+
+echo "Install Nutstore done."
+echo "Now you can start Nutstore from menu: Applications > Internet > Nutstore"
+
