@@ -5,7 +5,7 @@
 EAPI=5
 
 URELEASE="wily"
-inherit qt5-build ubuntu-versionator
+inherit qmake-utils ubuntu-versionator
 
 UURL="mirror://ubuntu/pool/main/a/${PN}"
 UVER_PREFIX="+${UVER_RELEASE}.${PVR_MICRO}"
@@ -30,8 +30,11 @@ RDEPEND="${DEPEND}"
 S="${WORKDIR}/${PN}-${PV}${UVER_PREFIX}"
 DOCS=( NEWS README )
 
+src_prepare() {
+	eqmake5 appmenu.pro
+}
+
 src_install() {
-	qt5-build_src_install
 
 	insinto /etc/profile.d
 	doins data/appmenu-qt5.sh

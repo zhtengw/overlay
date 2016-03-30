@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Zotero
+Comment=Open-source reference manager (standalone version)
+Exec=/usr/bin/zotero %f
+Icon=zotero
+Type=Application
+StartupNotify=true
+Categories=Office;Education;Science;
