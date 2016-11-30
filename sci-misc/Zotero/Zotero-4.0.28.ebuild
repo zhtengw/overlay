@@ -21,12 +21,24 @@ RDEPEND="dev-libs/dbus-glib
 		dev-libs/nss"
 
 
-if use amd64; then 
-	S=${WORKDIR}/${PN}_linux-x86_64
-elif use x86; then
-	S=${WORKDIR}/${PN}_linux-i686
-fi
+#if use amd64; then 
+#	S=${WORKDIR}/${PN}_linux-x86_64
+#elif use x86; then
+#	S=${WORKDIR}/${PN}_linux-i686
+#fi
+S=${WORKDIR}/${PN}
 
+src_unpack() {
+	if use x86; then
+		unpack ${P}_linux-i686.tar.bz2
+		mv ${PN}_linux-i686 ${PN}
+	fi
+	if	use amd64; then
+		unpack ${P}_linux-x86_64.tar.bz2
+		mv ${PN}_linux-x86_64 ${PN}
+	fi
+
+}
 src_prepare() {
 	sed -i -e "s|MOZ_PROGRAM=\"\"|MOZ_PROGRAM=\"/opt/${PN}/zotero\"|g" ${S}/run-zotero.sh
 }
