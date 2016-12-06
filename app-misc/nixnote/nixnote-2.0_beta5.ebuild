@@ -36,7 +36,7 @@ DEPEND="dev-libs/boost
 		      dev-qt/qtcore:4
 		      dev-qt/qtgui:4
 		      dev-qt/qtsql:4
-		      opencv3? ( media-libs/opencv:0/3.0[qt4] )
+		      opencv3? ( =media-libs/opencv-3* )
 		      !opencv3? ( media-libs/opencv:0/2.4[qt4] )
 	      )
 	      qt5? (

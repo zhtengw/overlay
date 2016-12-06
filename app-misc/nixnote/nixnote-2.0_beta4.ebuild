@@ -30,7 +30,7 @@ DEPEND="app-text/poppler[qt4]
 	      dev-qt/qtsql:4
 	      dev-libs/boost
 	      app-text/hunspell
-	      opencv3? ( media-libs/opencv:0/3.0[qt4] )
+	      opencv3? ( =media-libs/opencv-3* )
 	      !opencv3? ( media-libs/opencv:0/2.4[qt4] )
 	      "
 RDEPEND="${DEPEND}

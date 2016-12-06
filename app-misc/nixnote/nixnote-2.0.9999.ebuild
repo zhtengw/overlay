@@ -9,7 +9,7 @@ inherit qmake-utils versionator
 
 if [[ "${PV}" == *9999* ]] ; then
 	inherit git-r3
-	EGIT_REPO_URI="https://github.com/zhtengw/${PN}2.git"
+	EGIT_REPO_URI="https://github.com/baumgarr/${PN}2.git"
 else
 	MY_PV="$(replace_version_separator 2 '-')"
 	SRC_URI="https://github.com/baumgarr/${PN}2/archive/v${MY_PV}.tar.gz -> ${PN}2-${MY_PV}.tar.gz"
@@ -22,7 +22,7 @@ HOMEPAGE="http://sourceforge.net/projects/nevernote/"
 
 LICENSE="GPL-2"
 [[ ${PV} == *9999* ]] || KEYWORDS="~amd64 ~x86"
-IUSE="qt4 qt5 +opencv3"
+IUSE="qt4 qt5 +opencv3 plugins"
 
 REQUIRED_USE="^^ ( qt4 qt5 )
 		      qt5? ( opencv3 )
@@ -46,7 +46,7 @@ DEPEND="dev-libs/boost
 		      dev-qt/qtsql:5
 	      )
 		  
-		  opencv3? ( media-libs/opencv:0/3.0 )
+		  opencv3? ( =media-libs/opencv-3* )
 		  !opencv3? ( media-libs/opencv:0/2.4 )
 	      "
 RDEPEND="${DEPEND}
@@ -73,20 +73,63 @@ src_prepare() {
 	lupdate -pro NixNote2.pro -no-obsolete || die
 	lrelease NixNote2.pro || die
 	
+}
+
+src_configure() {
 	if use qt4; then
 		eqmake4 NixNote2.pro
+
+		if use plugins; then
+			cd ${S}/plugins/hunspell
+			eqmake4 Hunspell.pro
+	
+			cd ${S}/plugins/webcam
+			eqmake4 WebCam.pro
+
+			cd ${S}
+		fi
 	fi
 	if use qt5; then
 		eqmake5 NixNote2.pro
+		
+		if use plugins; then
+			cd ${S}/plugins/hunspell
+			eqmake5 Hunspell.pro
+
+			cd ${S}/plugins/webcam
+			eqmake5 WebCam.pro
+
+			cd ${S}
+		fi
 	fi
 }
 
+src_compile() {
+	emake || die "build Nixnote failed"
+
+	if use plugins; then
+		cd ${S}/plugins/hunspell
+		emake || die "plugin Hunspell build failed"
+
+		cd ${S}/plugins/webcam
+		emake || die "plugin WebCam build failed"
+		
+		cd ${S}
+	fi
+
+}
 src_install() {
 	insinto /usr/share/nixnote2
 	doins -r  help images java qss translations changelog.txt license.html shortcuts.txt *.ini
 
 	rm -r ${D}/usr/share/nixnote2/translations/*.ts
 	
+	if use plugins; then
+		insinto /usr/share/nixnote2/plugins
+		doins plugins/libhunspellplugin.so plugins/libwebcamplugin.so
+		fperms 0755 /usr/share/nixnote2/plugins/libhunspellplugin.so
+		fperms 0755 /usr/share/nixnote2/plugins/libwebcamplugin.so
+	fi
 	dobin nixnote2
 	
 	insinto /usr/share/applications
