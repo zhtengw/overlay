@@ -27,7 +27,7 @@ RDEPEND="${DEPEND}
 S=${WORKDIR}
 
 src_install() {
-	mv ${S}/usr/local/share/* ${S}/usr/share
+	mv ${S}/usr/local/share ${S}/usr/share
 	rm -r ${S}/usr/local
 	
 	insinto /
