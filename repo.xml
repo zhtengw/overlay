@@ -4,11 +4,11 @@
   <repo quality="experimental" status="unofficial">
     <name>aten</name>
     <description>Aten's gentoo overlay</description>
-    <homepage>https://gitcafe.com/zhtengw/overlay</homepage>
+    <homepage>https://github.com/zhtengw/overlay</homepage>
     <owner type="project">
       <email>atenzd@gmail.com</email>
       <name>aten</name>
     </owner>
-    <source type="git">git://gitcafe.com/zhtengw/overlay.git</source>
+    <source type="git">git://github.com/zhtengw/overlay.git</source>
   </repo>
 </repositories>
