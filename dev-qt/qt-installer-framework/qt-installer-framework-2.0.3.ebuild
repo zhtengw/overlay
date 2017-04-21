@@ -23,6 +23,7 @@ RDEPEND=">=dev-qt/qtcore-${QT_PV}
 		 >=dev-qt/qtdeclarative-${QT_PV}
 	     "
 DEPEND="${RDEPEND}
+		dev-qt/designer
 		doc? ( >=dev-qt/qdoc-${QT_PV} )
 		test? ( >=dev-qt/qttest-${QT_PV} )
 	     "
