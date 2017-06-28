@@ -33,5 +33,5 @@ src_install() {
 	insinto /
 	doins -r opt usr
 	
-	fperms 755 /opt/deepinwine/apps/Deepin-wechat/run.sh
+	fperms 755 /opt/deepinwine/apps/Deepin-WeChat/run.sh
 }
