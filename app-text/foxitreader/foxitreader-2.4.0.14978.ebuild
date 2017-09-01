@@ -11,7 +11,7 @@ MY_PV2=$(get_version_component_range 1-2)
 
 DESCRIPTION="A free PDF document viewer, featuring small size, quick startup, and fast page rendering"
 HOMEPAGE="https://www.foxitsoftware.cn/downloads/"
-SRC_URI="http://cdn07.foxitsoftware.cn/pub/foxit/reader/desktop/linux/2.x/2.3/en_us/FoxitReader${PV}_Server_x64_enu_Setup.run.tar.gz"
+SRC_URI="http://cdn07.foxitsoftware.cn/pub/foxit/reader/desktop/linux/2.x/${MY_PV2}/en_us/FoxitReader${PV}_Server_x64_enu_Setup.run.tar.gz"
 
 LICENSE="${PN}"
 SLOT="0"
@@ -39,13 +39,11 @@ RDEPEND="
 S=${WORKDIR}/${PN}-installer
 
 QA_PRESTRIPPED="/opt/FoxitReader/FoxitReader"
-PREV="r242174"
-RUN_FILE="FoxitReader.enu.setup.${PV}(${PREV}).x64.run"
 
 src_unpack() {
 	cd ${WORKDIR}
 	unpack ${A}
-	devtool --dump "${PN}-installer" ${RUN_FILE}
+	devtool --dump "${PN}-installer" *.run
 	cd ${S}
 	mkdir ${PN}
 	cd metadata/"Install Foxit Reader"
