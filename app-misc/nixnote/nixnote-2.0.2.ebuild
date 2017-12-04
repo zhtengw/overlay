@@ -21,7 +21,7 @@ HOMEPAGE="http://sourceforge.net/projects/nevernote/"
 
 LICENSE="GPL-2"
 [[ ${PV} == *9999* ]] || KEYWORDS="~amd64 ~x86"
-IUSE="qt4 +qt5 hunspell webcam"
+IUSE="qt4 +qt5 +hunspell webcam"
 
 REQUIRED_USE="^^ ( qt4 qt5 )"
 
