@@ -1,4 +1,4 @@
-# Copyright 1999-2013 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id: $
 
@@ -29,8 +29,7 @@ set_greeter() {
 		die -q "Greeter \"$1\" doesn't appear to be valid!"
 	fi
 
-	exec_=$(grep -v '^#' "${EROOT}"/usr/share/xgreeters/${greeter}.desktop | grep "Exec" )
-	exec_=${exec_##*=}
+	exec_=${greeter}
 
 	if [[ -z ${exec_} ]]; then
 		die -q "Could not evaluate executable for greeter \"$1\"!"
@@ -39,7 +38,11 @@ set_greeter() {
 	if [[ -e "${EROOT}"/usr/libexec/lightdm/lightdm-set-defaults ]]; then
 		"${EROOT}"/usr/libexec/lightdm/lightdm-set-defaults --greeter=${exec_}
         else
-                die -q "Greeter \"$1\" could not be set!"
+		if line=$(grep -s -m 1 -e "greeter-session" "${EROOT}/etc/lightdm/lightdm.conf"); then
+			sed -i -e "s/greeter-session=.*/greeter-session=${exec_}/" "${EROOT}/etc/lightdm/lightdm.conf"
+		else
+			echo "greeter-session=${exec_}" >> "${EROOT}/etc/lightdm/lightdm.conf"
+		fi
         fi
 }
 
