@@ -1,0 +1,18 @@
+[Unit]
+Description=KCPTun Server Daemon
+Wants=network.target
+After=network-online.target
+
+[Service]
+User=nobody
+Group=nobody
+Type=simple
+RemainAfterExit=yes
+#PIDFile=/run/kcptun-server.pid
+ExecStart=/usr/bin/kcptun-server -c /etc/kcptun/server.json --log /var/log/kcptun-server.log --quiet
+ExecReload=/usr/bin/kill -HUP $MAINPID
+RestartSec=1min
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

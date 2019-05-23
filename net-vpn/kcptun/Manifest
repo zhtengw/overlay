@@ -1,0 +1,13 @@
+DIST github.com-golang-crypto-22d7a77.tar.gz 1685391 SHA256 925f8c068dec5b1cb61080a5577915ca4bf606369683a3f8e03a9119df3dca6b
+DIST github.com-golang-net-aaf6012.tar.gz 965206 SHA256 c0947cd332130089b74fb701a8eaf616aaf758c3aa2f4bbf336fadda10a2370b
+DIST github.com-golang-snappy-v0.0.1.tar.gz 62605 SHA256 b1d97f47fcb61cb0cdd54bc424eda980c47838effb0ec9e322506514a50fee85
+DIST github.com-klauspost-cpuid-v1.2.1.tar.gz 279083 SHA256 fd66be8517ba837d0f582ad095d2e42e7464c08ef2a3eaffa3bf83330223fa92
+DIST github.com-klauspost-reedsolomon-v1.9.1.tar.gz 159389 SHA256 3e67fb70380ae949a50159b7347eb24ab9160258b768de9ab32fa7df4d351bea
+DIST github.com-pkg-errors-v0.8.1.tar.gz 11009 SHA256 7a428967c6fc2e80cd84a0d9469ab6bd4dbe6b13493ba6294322a933a5a7e356
+DIST github.com-templexxx-cpufeat-cef66df.tar.gz 2974 SHA256 65d2e68a483cf70ac9b7e78fd58c5196c6d02551b9f682b42714e96628cb5a16
+DIST github.com-templexxx-xor-0.1.2.tar.gz 6429 SHA256 651fd92863fbd5db45f08bb494cf139b9b6cb5901fe228a635f124f256d8d3bf
+DIST github.com-tjfoc-gmsm-v1.2.tar.gz 83757 SHA256 819721aab52a141155f1939d7fbb83ab90171c7b9eb3b78af7abadbb432d443b
+DIST github.com-urfave-cli-v1.20.0.tar.gz 58397 SHA256 c5ba59f5742c99618b5ba34211699287cd3e80c41488bb267035ce0163e3bade
+DIST github.com-xtaci-kcp-go-v5.2.7.tar.gz 77924 SHA256 f7d9b7bac5b1a183c0c70df2ed093b4a9c84bf2559064bbae3cdb3b84a0b203f
+DIST github.com-xtaci-smux-v1.3.2.tar.gz 133766 SHA256 a401740834606f913e234843d212310791b08eeedf5ea285c7bb067c16bff77a
+DIST kcptun-20190515.tar.gz 278753 SHA256 2c9573453b09a64852e33404a2dfe45f96e5f49e547678c7b13549cfff41cae7
