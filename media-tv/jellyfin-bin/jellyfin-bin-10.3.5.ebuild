@@ -34,6 +34,8 @@ RDEPEND="${DEPEND}
 		dev-db/sqlite:3
 		media-libs/fontconfig
 		media-libs/freetype
+		dev-util/lttng-ust
+		app-crypt/mit-krb5
 		dev-libs/openssl"
 
 S=${WORKDIR}/${MY_PN}_${PV}
@@ -82,7 +84,7 @@ src_install() {
 
 	insinto /usr/$(get_libdir)/${MY_PN}/bin
 	doins -r ${S}/*
-	fperms 0755 /usr/$(get_libdir)/${MY_PN}/bin/${MY_PN}
+	fperms 0755 /usr/$(get_libdir)/${MY_PN}/bin/{${MY_PN},*.so}
 
 	dosym /usr/$(get_libdir)/${MY_PN}/bin/${MY_PN} /usr/bin/${MY_PN}
 }
