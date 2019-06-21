@@ -25,6 +25,8 @@ RDEPEND="${DEPEND}
 						media-libs/zvbi
 						media-sound/lame
 						media-libs/opus
+						media-libs/libass
+						dev-libs/fribidi
 						media-libs/libtheora
 						media-libs/x264:0/152
 						media-libs/x265:0/146
