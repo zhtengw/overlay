@@ -38,6 +38,7 @@ RDEPEND="${DEPEND}
 		media-libs/freetype
 		dev-util/lttng-ust
 		app-crypt/mit-krb5
+		dev-libs/icu
 		dev-libs/openssl"
 
 S=${WORKDIR}/${MY_PN}_${PV}
