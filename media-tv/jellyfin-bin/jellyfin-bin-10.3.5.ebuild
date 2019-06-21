@@ -84,7 +84,7 @@ src_install() {
 
 	insinto /usr/$(get_libdir)/${MY_PN}/bin
 	doins -r ${S}/*
-	fperms 0755 /usr/$(get_libdir)/${MY_PN}/bin/{${MY_PN},*.so}
+	fperms 0755 /usr/$(get_libdir)/${MY_PN}/bin/${MY_PN}
 
 	dosym /usr/$(get_libdir)/${MY_PN}/bin/${MY_PN} /usr/bin/${MY_PN}
 }
