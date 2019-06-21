@@ -4,14 +4,6 @@
 # Use this file to override the default configurations; add additional
 # options with JELLYFIN_ADD_OPTS.
 
-# Under systemd, use
-#  /etc/systemd/system/jellyfin.service.d/jellyfin.service.conf
-# to override the user or this config file's location.
-
-#
-# General options
-#
-
 # Program directories
 JELLYFIN_DATA_DIR="/var/lib/jellyfin"
 JELLYFIN_CONFIG_DIR="/etc/jellyfin"
@@ -29,10 +21,6 @@ JELLYFIN_FFMPEG_OPT="--ffmpeg=/usr/lib/jellyfin-ffmpeg/ffmpeg"
 
 # [OPTIONAL] run Jellyfin without the web app
 #JELLYFIN_NOWEBAPP_OPT="--noautorunwebapp"
-
-#
-# SysV init/Upstart options
-#
 
 # Application username
 JELLYFIN_USER="jellyfin"

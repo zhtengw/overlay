@@ -56,20 +56,33 @@ src_unpack() {
 
 src_install() {
 
-	insinto /
-	doins -r ${FILESDIR}/etc
+	insinto /etc/${MY_PN}
+	doins ${FILESDIR}/logging.json
 	fowners -R "${MY_PN}:${MY_PN}" "/etc/${MY_PN}"
 
+	cp "${FILESDIR}/${MY_PN}.conf.d" "${T}/${MY_PN}.conf.d" || die
+	cp "${FILESDIR}/${MY_PN}.service.conf" "${T}/${MY_PN}.service.conf" || die
+
 	sed -i "s|/usr/lib/|/usr/$(get_libdir)/|g" \
-		${ED}/etc/default/${MY_PN}
+		"${T}/${MY_PN}.conf.d" \
+		"${T}/${MY_PN}.service.conf" || die
+
 	if use system-ffmpeg; then
-		sed -i "s|^JELLYFIN_FFMPEG_OPT=|\#JELLYFIN_FFMPEG_OPT=|g" ${ED}/etc/default/${MY_PN} || die
+		sed -i "/JELLYFIN_FFMPEG_OPT=/s/^/#&/" \
+			"${T}/${MY_PN}.conf.d" \
+			"${T}/${MY_PN}.service.conf" || die
 	else
 		exeinto /usr/$(get_libdir)/${MY_PN}-ffmpeg/
 		doexe ${WORKDIR}/usr/lib/jellyfin-ffmpeg/{ffmpeg,ffprobe}
 
 		dosym /usr/$(get_libdir)/libwebp.so.7.0.1 /usr/$(get_libdir)/libwebp.so.6
 	fi
+
+	newconfd "${T}/${MY_PN}.conf.d" "${MY_PN}"
+	newinitd "${FILESDIR}/${MY_PN}.init.d" "${MY_PN}"
+
+	systemd_install_serviced ${T}/${MY_PN}.service.conf
+	systemd_dounit ${FILESDIR}/${MY_PN}.service
 
 	keepdir "/var/lib/${MY_PN}"
 	fowners -R "${MY_PN}:${MY_PN}" "/var/lib/${MY_PN}"
@@ -80,7 +93,6 @@ src_install() {
 	keepdir "/var/cache/${MY_PN}"
 	fowners -R "${MY_PN}:${MY_PN}" "/var/cache/${MY_PN}"
 
-	systemd_dounit ${FILESDIR}/${MY_PN}.service
 
 	exeinto /usr/$(get_libdir)/${MY_PN}
 	doexe ${FILESDIR}/restart.sh
