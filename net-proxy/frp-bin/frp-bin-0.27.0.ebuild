@@ -22,7 +22,8 @@ KEYWORDS="~amd64 ~arm ~x86 ~mips"
 IUSE=""
 
 DEPEND=""
-RDEPEND="${DEPEND}"
+RDEPEND="${DEPEND}
+		!net-proxy/frp"
 
 src_unpack() {
 	if [ "${A}" != "" ]; then
