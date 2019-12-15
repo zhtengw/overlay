@@ -2,14 +2,14 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 inherit qmake-utils
 
 DESCRIPTION="The Qt Installer Framework used for the Qt SDK installer."
 HOMEPAGE="http://qt-project.org/wiki/Qt-Installer-Framework"
-MY_P="${PN}-opensource-${PV}-src"
-SRC_URI="https://download.qt.io/official_releases/${PN}/${PV}/${MY_P}.tar.gz"
+MY_P="${PN}-opensource-src-${PV}"
+SRC_URI="https://download.qt.io/official_releases/${PN}/${PV}/${MY_P}.tar.gz -> ${P}.tar"
 
 LICENSE="LGPL-2+"
 SLOT="0"
@@ -20,17 +20,18 @@ IUSE="doc test"
 QT_PV="5.5.0:5"
 
 RDEPEND=">=dev-qt/qtcore-${QT_PV}
-		 >=dev-qt/qtdeclarative-${QT_PV}
-	     "
+		>=dev-qt/qtdeclarative-${QT_PV}
+		"
 DEPEND="${RDEPEND}
 		doc? ( >=dev-qt/qdoc-${QT_PV} )
 		test? ( >=dev-qt/qttest-${QT_PV} )
-	     "
+		"
 
-S=${WORKDIR}/${MY_P}
+S=${WORKDIR}
 
 src_prepare() {
 	eqmake5	$(use test && echo BUILD_TESTS=1) ./installerfw.pro
+	default_src_prepare
 }
 
 src_install() {

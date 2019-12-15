@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Utility to change the LightDM greeter being used"
 HOMEPAGE="http://www.gentoo.org/"
@@ -19,7 +19,7 @@ RDEPEND="app-admin/eselect"
 S="${FILESDIR}"
 
 src_install() {
-        insinto /usr/share/eselect/modules
-        newins "${FILESDIR}"/${P}.eselect lightdm.eselect
+	insinto /usr/share/eselect/modules
+	newins "${FILESDIR}"/${P}.eselect lightdm.eselect
 }
 

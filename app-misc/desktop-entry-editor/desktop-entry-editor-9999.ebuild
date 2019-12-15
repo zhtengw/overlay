@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 inherit qmake-utils
 
@@ -35,6 +35,7 @@ DEPEND="${RDEPEND}
 
 src_prepare() {
 	QT_SELECT=qt5 eqmake5
+	default_src_prepare
 }
 
 src_install() {

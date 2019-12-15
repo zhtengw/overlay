@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=5
+EAPI=6
 inherit cmake-utils
 
 DESCRIPTION="A lightweight and ultra-fast shadowsocks library written in C++/Qt"
