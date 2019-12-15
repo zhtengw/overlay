@@ -16,7 +16,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE="+system-ffmpeg"
 
-DEPEND=""
+DEPEND="!media-tv/jellyfin"
 RDEPEND="${DEPEND}
 		system-ffmpeg? ( media-video/ffmpeg[fontconfig,gmp,libass,libdrm,truetype,fribidi,vorbis,vdpau,vaapi,x264,x265,webp,bluray,zvbi,mp3,opus,theora] )
 		!system-ffmpeg? ( x11-libs/libva:0/2[X,drm]
