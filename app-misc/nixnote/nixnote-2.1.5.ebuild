@@ -16,8 +16,8 @@ else
 fi
 
 SLOT="2"
-DESCRIPTION="Nixnote - A clone of Evernote for Linux"
-HOMEPAGE="http://sourceforge.net/projects/nevernote/"
+DESCRIPTION="Nixnote - Evernote desktop client for Linux"
+HOMEPAGE="https://github.com/robert7/nixnote2"
 
 LICENSE="GPL-2"
 [[ ${PV} == *9999* ]] || KEYWORDS="~amd64 ~x86"
