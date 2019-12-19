@@ -5,7 +5,7 @@ After = network.target
 [Service]
 Type = simple
 User = jellyfin
-ExecStart = /usr/bin/jellyfin ${JELLYFIN_RESTART_OPT} ${JELLYFIN_FFMPEG_OPT} ${JELLYFIN_SERVICE_OPT} ${JELLYFIN_NOWEBAPP_OPT}
+ExecStart = /usr/bin/jellyfin ${JELLYFIN_SERVICE_OPT} ${JELLYFIN_NOWEBAPP_OPT} ${JELLYFIN_ADD_OPTS}
 Restart = on-failure
 TimeoutSec = 15
 

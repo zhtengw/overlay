@@ -3,18 +3,10 @@
 
 EAPI=6
 
-#IUSE="net45 debug developer"
-#USE_DOTNET="net45"
-
-inherit systemd user
-#inherit systemd user git-r3
+inherit systemd
 
 DESCRIPTION="The Free Software Media System"
 HOMEPAGE="https://github.com/jellyfin/jellyfin"
-
-#EGIT_REPO_URI="https://github.com/${PN}/${PN}.git"
-#EGIT_COMMIT="v${PV}"
-#EGIT_SUBMODULES=( jellyfin-web )
 
 SRC_URI="https://github.com/${PN}/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz
 		https://github.com/${PN}/${PN}-web/archive/v${PV}.tar.gz -> ${PN}-web-${PV}.tar.gz"
@@ -22,10 +14,11 @@ SRC_URI="https://github.com/${PN}/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz
 LICENSE="GPL-2+"
 SLOT="0"
 KEYWORDS="~amd64"
-#IUSE="system-ffmpeg"
 
 DEPEND="!media-tv/jellyfin-bin"
 RDEPEND="${DEPEND}
+		acct-group/jellyfin
+		acct-user/jellyfin
 		media-video/ffmpeg[fontconfig,gmp,libass,libdrm,truetype,fribidi,vorbis,vdpau,vaapi,x264,x265,webp,bluray,zvbi,mp3,opus,theora]
 		sys-process/at
 		dev-db/sqlite:3
@@ -40,22 +33,15 @@ BDEPEND="dev-dotnet/dotnetcore-sdk-bin
 
 METAFILETOBUILD="MediaBrowser.sln"
 
-pkg_setup() {
-	enewgroup "${PN}"
-	enewuser "${PN}" -1 -1 "/var/lib/${PN}" "${PN}"
-	esethome "${PN}" "/var/lib/${PN}"
-
-}
 
 src_compile() {
 	cd ${WORKDIR}/${PN}-web-${PV}
-	yarn install
+	yarn install || die
 	cp -r dist/. ${S}/MediaBrowser.WebDashboard/jellyfin-web
 	cd ${S}
 	export DOTNET_CLI_TELEMETRY_OPTOUT=1
-	dotnet build --configuration Release Jellyfin.Server
-#	dotnet publish --configuration Release Jellyfin.Server --output ${S}/bin
-	dotnet publish --configuration Release Jellyfin.Server --output ${S}/bin --self-contained --runtime linux-x64
+	dotnet build --configuration Release Jellyfin.Server || die
+	dotnet publish --configuration Release Jellyfin.Server --output ${S}/bin --self-contained --runtime linux-x64 || die
 }
 
 src_install() {
@@ -85,10 +71,6 @@ src_install() {
 
 	keepdir "/var/cache/${PN}"
 	fowners -R "${PN}:${PN}" "/var/cache/${PN}"
-
-
-	exeinto /usr/$(get_libdir)/${PN}
-	doexe ${FILESDIR}/restart.sh
 
 	insinto /usr/$(get_libdir)/${PN}/
 	doins -r ${S}/bin
