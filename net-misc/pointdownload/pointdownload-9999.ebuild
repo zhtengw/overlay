@@ -4,7 +4,7 @@
 
 # Maintainer: check IUSE-defaults at DefineOptions.cmake
 
-EAPI=4
+EAPI=7
 
 EGIT_REPO_URI="https://github.com/PointTeam/PointDownload.git"
 EGIT_BRANCH="develop"
@@ -42,6 +42,7 @@ src_prepare() {
 	
 # 	eqmake5 PREFIX=/usr/share 
 	eqmake5
+	default
 }
 src_install() {
  	INSTALL_ROOT=${D} emake install || die "emake install failed"
